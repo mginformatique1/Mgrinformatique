@@ -1,0 +1,37 @@
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menuToggle");
+  const mainNav = document.getElementById("mainNav");
+  const languageSwitch = document.getElementById("languageSwitch");
+  const year = document.getElementById("year");
+
+  if (year) {
+    year.textContent = new Date().getFullYear();
+  }
+
+  if (menuToggle && mainNav) {
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mainNav.classList.toggle("active");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+  }
+
+  let currentLanguage = "ar";
+
+  if (languageSwitch) {
+    languageSwitch.addEventListener("click", () => {
+      currentLanguage = currentLanguage === "ar" ? "fr" : "ar";
+
+      document.documentElement.lang = currentLanguage;
+      document.documentElement.dir =
+        currentLanguage === "ar" ? "rtl" : "ltr";
+
+      document.querySelectorAll("[data-ar][data-fr]").forEach((element) => {
+        element.innerHTML = element.dataset[currentLanguage];
+      });
+
+      languageSwitch.textContent =
+        currentLanguage === "ar" ? "FR" : "AR";
+    });
+  }
+});
